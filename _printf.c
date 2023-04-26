@@ -24,12 +24,12 @@ int _printf(const char *format, ...)
     char *str;
     va_start(args, format);
 
+    if (format == NULL)
+    {
+	    return -1;
+    }
     for (i = 0; format && format[i]; i++)
     {
-	if (format == NULL)
-	{
-		return -1;
-	}
         if (format[i] == '%')
         {
             i++;
