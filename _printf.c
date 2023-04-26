@@ -1,5 +1,7 @@
 #include <stdarg.h>
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
  * _putchar - print a charachter
