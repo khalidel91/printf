@@ -59,7 +59,7 @@ int _printf(const char *format, ...)
 
 	else if (!format[i])
 	{
-		return (res);
+		i--;
 	}
 	}
 		
