@@ -22,6 +22,7 @@ int _putchar(char c)
 int caseint(int num, char *str)
 {
     int i = 0, sign = 0;
+    int j = 0, len;
     if (num == 0)
     {
         str[i++] = '0';
@@ -41,12 +42,12 @@ int caseint(int num, char *str)
         str[i++] = '-';
     }
     str[i] = '\0';
-    int len = i;
-    for (i = 0; i < len / 2; i++)
+    len = i;
+    for (j; j < len / 2; j++)
     {
-        char tmp = str[i];
-        str[i] = str[len - i - 1];
-        str[len - i - 1] = tmp;
+        char tmp = str[j];
+        str[j] = str[len - j - 1];
+        str[len - j - 1] = tmp;
     }
     return len;
 }
