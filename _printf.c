@@ -57,6 +57,11 @@ int _printf(const char *format, ...)
                 res++;
             }
         }
+	if (!format[i])
+	{
+		return (res);
+	}
+		
         else
         {
             _putchar(format[i]);
