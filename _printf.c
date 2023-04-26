@@ -43,7 +43,7 @@ int caseint(int num, char *str)
     }
     str[i] = '\0';
     len = i;
-    for (j; j < len / 2; j++)
+    for (j = 0; j < len / 2; j++)
     {
         char tmp = str[j];
         str[j] = str[len - j - 1];
@@ -105,8 +105,10 @@ int _printf(const char *format, ...)
 			{
 				int num = va_arg(args, int);
 				char buffer[20];
+				int j;
 				int len = caseint(num, buffer);
-				for (int j = 0; j < len; j++)
+
+				for (j = 0; j < len; j++)
 				{
 					_putchar(buffer[j]);
 					res++;
