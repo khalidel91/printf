@@ -56,10 +56,11 @@ int _printf(const char *format, ...)
                 _putchar('%');
                 res++;
             }
-        }
+
 	else if (!format[i])
 	{
 		return (res);
+	}
 	}
 		
         else
