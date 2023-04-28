@@ -9,7 +9,7 @@
  *
  * Return: void
  */
-int casebin(unsigned int num, char *str)
+int caseb(unsigned int num, char *str)
 {
     int i = 0, j = 0;
     do {
@@ -143,7 +143,7 @@ int _printf(const char *format, ...)
                 unsigned int num = va_arg(args, unsigned int);
                 char buffer[33];
                 int j;
-                int len = casebin(num, buffer);
+                int len = caseb(num, buffer);
 
                 for (j = 0; j < len; j++)
                 {
