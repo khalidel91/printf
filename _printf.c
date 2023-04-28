@@ -1,36 +1,13 @@
 #include <stdarg.h>
-#include "main.h"
-#include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 
-/**
- * casebin - function to print binary number
- * @n: unsigned int number
- *
- * Return: void
- */
-int caseb(unsigned int num, char *str)
-{
-    int i = 0, j = 0, len;
-    do {
-        str[i++] = num % 2 + '0';
-        num /= 2;
-    } while (num != 0);
-    str[i] = '\0';
-    len = i;
-    for (j = 0; j < len / 2; j++)
-    {
-        char tmp = str[j];
-        str[j] = str[len - j - 1];
-        str[len - j - 1] = tmp;
-    }
-    return len;
-}
+#define BUFFER_SIZE 1024
 
 /**
- * _putchar - print a charachter
+ * _putchar - print a character
  * @c: the character to be printed
- * Return: printed character
+ * Return: 1 on success, -1 on failure
  */
 int _putchar(char c)
 {
@@ -38,127 +15,64 @@ int _putchar(char c)
 }
 
 /**
- * caseint - convert integer to string
- * @num: the integer to convert
- * @str: a buffer to store the resulting string
- * Return: the length of the resulting string
+ * _printf - custom printf function
+ * @format: a string containing zero or more directives to print
+ * Return: the number of characters printed
  */
-int caseint(int num, char *str)
-{
-    int k = 0, sign = 0;
-    int j = 0, len;
-    if (num == 0)
-    {
-        str[k++] = '0';
-    }
-    else if (num < 0)
-    {
-        sign = 1;
-        num = -num;
-    }
-    while (num != 0)
-    {
-        str[k++] = num % 10 + '0';
-        num = num / 10;
-    }
-    if (sign)
-    {
-        str[k++] = '-';
-    }
-    str[k] = '\0';
-    len = k;
-    for (j = 0; j < len / 2; j++)
-    {
-        char tmp = str[j];
-        str[j] = str[len - j - 1];
-        str[len - j - 1] = tmp;
-    }
-    return len;
-}
-/**
- * _printf - function printf
- * @format: the format of arguments
- * Return: the numberof printed charachetrs
- */
-
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i, res = 0;
-	char *str;
+	char buffer[BUFFER_SIZE];
+	char *ptr = buffer;
+	const char *s;
+	int c, n = 0;
 
 	va_start(args, format);
 
-	if (format == NULL)
+	for (s = format; *s; ++s)
 	{
-		return (0);
-	}
-	for (i = 0; format && format[i]; i++)
-	{
-		if (format[i] == '%')
+		if (*s != '%')
 		{
-			i++;
-
-			if (format[i] == 'c')
+			*ptr++ = *s;
+			if (ptr == buffer + BUFFER_SIZE)
 			{
-				_putchar(va_arg(args, int));
-				res++;
+				n += write(1, buffer, BUFFER_SIZE);
+				ptr = buffer;
 			}
-			else if (format[i] == 's')
-			{
-				str = va_arg(args, char *);
-				if (str == NULL)
-					str = "(null)";
-				while (*str)
-				{
-					_putchar(*str);
-					str++;
-					res++;
-				}
-			}
-			else if (format[i] == '%')
-			{
-				_putchar('%');
-				res++;
-			}
-			else if (!format[i])
-			{
-				i--;
-			}
-			else if (format[i] == 'd' || format[i] == 'i')
-			{
-				int num = va_arg(args, int);
-				char buffer[20];
-				int j;
-				int len = caseint(num, buffer);
-
-				for (j = 0; j < len; j++)
-				{
-					_putchar(buffer[j]);
-					res++;
-				}
-			}
-			else if (format[i] == 'b')
-  {
-                unsigned int num = va_arg(args, unsigned int);
-                char buffer[33];
-                int j;
-                int len = caseb(num, buffer);
-
-                for (j = 0; j < len; j++)
-                {
-                    _putchar(buffer[j]);
-                    res++;
-                }
-            }
 		}
-
 		else
 		{
-			_putchar(format[i]);
-			res++;
+			switch (*++s)
+			{
+				case 'c':
+					c = va_arg(args, int);
+					*ptr++ = c;
+					if (ptr == buffer + BUFFER_SIZE)
+					{
+						n += write(1, buffer, BUFFER_SIZE);
+						ptr = buffer;
+					}
+					break;
+				case 's':
+					for (char *str = va_arg(args, char *); *str; ++str)
+					{
+						*ptr++ = *str;
+						if (ptr == buffer + BUFFER_SIZE)
+						{
+							n += write(1, buffer, BUFFER_SIZE);
+							ptr = buffer;
+						}
+					}
+					break;
+				default:
+					break;
+			}
 		}
 	}
 	va_end(args);
-	return (res);
+
+	if (ptr > buffer)
+		n += write(1, buffer, ptr - buffer);
+
+	return (n);
 }
