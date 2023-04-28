@@ -128,9 +128,9 @@ int _printf(const char *format, ...)
 					res++;
 				}
 			}
-			else if (*format[i] == 'b')
+			else if (format[i] == 'b')
 			{
-				unsigned int n = va_arg(arg_list, unsigned int);
+				unsigned int n = va_arg(args, unsigned int);
 
 				print_binary(n);
 				res += sizeof(unsigned int) * 8;
