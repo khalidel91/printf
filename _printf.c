@@ -45,11 +45,11 @@ int _putchar(char c)
  */
 int caseint(int num, char *str)
 {
-    int i = 0, sign = 0;
+    int k = 0, sign = 0;
     int j = 0, len;
     if (num == 0)
     {
-        str[i++] = '0';
+        str[k++] = '0';
     }
     else if (num < 0)
     {
@@ -58,15 +58,15 @@ int caseint(int num, char *str)
     }
     while (num != 0)
     {
-        str[i++] = num % 10 + '0';
+        str[k++] = num % 10 + '0';
         num = num / 10;
     }
     if (sign)
     {
-        str[i++] = '-';
+        str[k++] = '-';
     }
-    str[i] = '\0';
-    len = i;
+    str[k] = '\0';
+    len = k;
     for (j = 0; j < len / 2; j++)
     {
         char tmp = str[j];
