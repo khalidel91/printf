@@ -4,23 +4,28 @@
 #include <stdlib.h>
 
 /**
- * print_binary - function to print binary number
+ * casebin - function to print binary number
  * @n: unsigned int number
  *
  * Return: void
  */
-int print_binary(unsigned int n)
+int casebin(unsigned int num, char *str)
 {
-	int len = 0;
-    if (n / 2)
+    int i = 0, j = 0;
+    do {
+        str[i++] = num % 2 + '0';
+        num /= 2;
+    } while (num != 0);
+    str[i] = '\0';
+    int len = i;
+    for (j = 0; j < len / 2; j++)
     {
-	    len ++;
-	    print_binary(n / 2);
+        char tmp = str[j];
+        str[j] = str[len - j - 1];
+        str[len - j - 1] = tmp;
     }
-    putchar((n % 2) + '0');
-	return (len);
+    return len;
 }
-
 
 /**
  * _putchar - print a charachter
@@ -134,12 +139,18 @@ int _printf(const char *format, ...)
 				}
 			}
 			else if (format[i] == 'b')
-			{
-				unsigned int n = va_arg(args, unsigned int);
+  {
+                unsigned int num = va_arg(args, unsigned int);
+                char buffer[33];
+                int j;
+                int len = casebin(num, buffer);
 
-				res += print_binary(n);
-			}
-
+                for (j = 0; j < len; j++)
+                {
+                    _putchar(buffer[j]);
+                    res++;
+                }
+            }
 		}
 
 		else
