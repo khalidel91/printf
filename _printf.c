@@ -4,6 +4,20 @@
 #include <stdlib.h>
 
 /**
+ * print_binary - function to print binary number
+ * @n: unsigned int number
+ *
+ * Return: void
+ */
+void print_binary(unsigned int n)
+{
+    if (n / 2)
+        print_binary(n / 2);
+    putchar((n % 2) + '0');
+}
+
+
+/**
  * _putchar - print a charachter
  * @c: the character to be printed
  * Return: printed character
@@ -113,6 +127,12 @@ int _printf(const char *format, ...)
 					_putchar(buffer[j]);
 					res++;
 				}
+			}
+			else if (*format == 'b')
+			{
+				unsigned int n = va_arg(arg_list, unsigned int);
+				print_binary(n);
+				char_count += sizeof(unsigned int) * 8;
 			}
 
 		}
