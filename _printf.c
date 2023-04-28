@@ -11,13 +11,13 @@
  */
 int caseb(unsigned int num, char *str)
 {
-    int i = 0, j = 0;
+    int i = 0, j = 0, len;
     do {
         str[i++] = num % 2 + '0';
         num /= 2;
     } while (num != 0);
     str[i] = '\0';
-    int len = i;
+    len = i;
     for (j = 0; j < len / 2; j++)
     {
         char tmp = str[j];
