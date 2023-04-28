@@ -9,11 +9,16 @@
  *
  * Return: void
  */
-void print_binary(unsigned int n)
+int print_binary(unsigned int n)
 {
+	int len = 0;
     if (n / 2)
-        print_binary(n / 2);
+    {
+	    len ++;
+	    print_binary(n / 2);
+    }
     putchar((n % 2) + '0');
+	return (len);
 }
 
 
@@ -132,8 +137,7 @@ int _printf(const char *format, ...)
 			{
 				unsigned int n = va_arg(args, unsigned int);
 
-				print_binary(n);
-				res += sizeof(unsigned int) * 8;
+				res += print_binary(n);
 			}
 
 		}
