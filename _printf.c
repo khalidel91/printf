@@ -128,11 +128,12 @@ int _printf(const char *format, ...)
 					res++;
 				}
 			}
-			else if (*format == 'b')
+			else if (*format[i] == 'b')
 			{
 				unsigned int n = va_arg(arg_list, unsigned int);
+
 				print_binary(n);
-				char_count += sizeof(unsigned int) * 8;
+				res += sizeof(unsigned int) * 8;
 			}
 
 		}
